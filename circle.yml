@@ -1,2 +1,3 @@
 test:
-  - rspec
+  override:
+    - rspec
