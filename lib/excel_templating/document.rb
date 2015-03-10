@@ -21,6 +21,23 @@ module ExcelTemplating
   #   end
   class Document
     extend DocumentDsl
+    class << self
+      ## The non Dsl Methods, not expected to be used as part of the document description
+      # @return [String] The document title
+      def document_title
+        @document_title
+      end
+
+      # @return [String] The document organization
+      def document_organization
+        @document_organization
+      end
+
+      # @return [Hash] The default styling for the document
+      def document_default_styling
+        @default_styling || default_styling
+      end
+    end
     # Create a new document with given data.  'all_sheets' is available to the template on each sheet.
     # otherwise each numeric key in 'sheet_data' provides the data for that specific sheet.
     # For example {all_sheets: {foo: 'bar'}, 1 => {var1: "foo"}}
@@ -51,3 +68,4 @@ module ExcelTemplating
 end
 
 require_relative 'document/sheet'
+require_relative 'document/data_source_registry'

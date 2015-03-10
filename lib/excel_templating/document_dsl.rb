@@ -31,6 +31,23 @@ module ExcelTemplating
       nil
     end
 
+    # Add a list validator to the excel document
+    # @example
+    #   list_source :valid_foos, title: "Valid Foos", list: ['foo','bar'], inline: false
+    # @param [Symbol] source_symbol symbol to registry for the validator
+    # @param [String] title Title to show when displaying this validator
+    # @param [Array<String>|Symbol] list items to use for validation, you may also use :from_data and at render time
+    #                                    the validation items will be fetched from key 'source_symbol'
+    # @param [TrueClass|FalseClass] inline If true then the validator will be written to the document inline.
+    #                                       Otherwise it will be written to a 'DataSheet'
+    def list_source(source_symbol, title:, list: :from_data, inline: false)
+      data_source_registry.add_list(source_symbol, title, list, inline)
+    end
+
+    def data_source_registry
+      @data_source_registry ||= ExcelTemplating::Document::DataSourceRegistry.new
+    end
+
     # Define a title for this workbook.  You may use mustaching here.
     # @param [String] string
     def title(string)
@@ -55,21 +72,6 @@ module ExcelTemplating
     # @param [String] string
     def organization(string)
       @document_organization = string
-    end
-
-    # @return [String] The document title
-    def document_title
-      @document_title
-    end
-
-    # @return [String] The document organization
-    def document_organization
-      @document_organization
-    end
-
-    # @return [Hash] The default styling for the document
-    def document_default_styling
-      @default_styling || default_styling
     end
   end
 end

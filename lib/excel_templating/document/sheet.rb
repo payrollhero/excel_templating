@@ -9,7 +9,10 @@ module ExcelTemplating
     def initialize(sheet_number)
       @sheet_number = sheet_number
       @repeated_rows = {}
+      @validated_cells = {}
     end
+
+    ### Sheet Dsl Methods ####
 
     # @param [Float] decimal_inches
     # @return [Float] inches converted to excel integer size.
@@ -33,9 +36,22 @@ module ExcelTemplating
     #   repeat_row 17, with: :employee_data
     # @param [Integer] row_number
     # @param [Symbol] with
-    def repeat_row(row_number, with:)
+    def repeat_row(row_number, with:, &block)
       repeated_rows[row_number] = RepeatedRow.new(row_number, with)
+      repeated_rows[row_number].instance_eval(&block) if block_given?
     end
+
+    # Validate a particular cell using a declared data source
+    # @example
+    #   validate_cell row: 1, column :5, with: :valid_foos
+    # @param [Integer] row
+    # @param [Integer] column
+    # @param [Symbol] with
+    def validate_cell(row:, column:, with:)
+      validated_cells["#{row}:#{column}"] = with
+    end
+    
+    #### Non DSL Methods ###
 
     def default_column_style
       @default_column_style
@@ -49,10 +65,32 @@ module ExcelTemplating
       data[sheet_number] || {}
     end
 
+    # @param [Integer] row_number
     def repeated_row?(row_number)
       repeated_rows.has_key?(row_number)
     end
 
+    # @param [Integer] row_number
+    # @param [Integer] column_number
+    def validated_cell?(row_number, column_number)
+      (repeated_row?(row_number) && repeated_rows[row_number].validated_column?(column_number)) ||
+        validated_cells.has_key?("#{row_number}:#{column_number}")
+    end
+
+    # @param [Integer] row_number
+    # @param [Integer] column_number
+    # @return [Symbol] The registered symbol for that row & column or Nil
+    def validation_source_name(row_number, column_number)
+      if repeated_row?(row_number)
+        repeated_rows[row_number].validated_column_source(column_number)
+      else
+        validated_cells["#{row_number}:#{column_number}"]
+      end
+    end
+
+    # Repeat each row of the data if it is repeated, yielding each item in succession.
+    # @param [Integer] row_number
+    # @param [Hash] sheet_data Data for this sheet
     def each_row_at(row_number, sheet_data)
       if repeated_row?(row_number)
         repeater = repeated_rows[row_number]
@@ -67,7 +105,7 @@ module ExcelTemplating
 
     private
 
-    attr_reader :sheet_number, :repeated_rows
+    attr_reader :sheet_number, :repeated_rows, :validated_cells
 
     def verify_array!(sheet_data, attribute)
       unless sheet_data[attribute].is_a?(Array)
