@@ -10,10 +10,10 @@ describe ExcelAbstraction::Time do
   end
 
   context "when date is after REFERENCE date" do
-    subject { described_class.new(Time.parse("2000-01-19 12:00")) }
+    subject { described_class.new(Time.parse("2000-01-19 12:00 +00:00")) }
 
     it "should return 36544.50 for Jan 19, 2000 12:00" do
-      subject.should == 36544.833333333336
+      subject.should == 36544.5
     end
   end
 
