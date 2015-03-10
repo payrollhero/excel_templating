@@ -7,7 +7,7 @@ module ExcelTemplating
 
       private
       def letters
-        @row_letters ||= ('A'..'Z').to_a #todo: maybe a little shortsighted?
+        @row_letters ||= ('A' .. 'ZZ').to_a
       end
     end
   end
