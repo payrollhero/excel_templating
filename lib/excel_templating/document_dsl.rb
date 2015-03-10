@@ -31,17 +31,20 @@ module ExcelTemplating
       nil
     end
 
-    # Define the data sources for validation in this document
+    # Add a list validator to the excel document
     # @example
-    #   data_sources :valid_foos, :valid_foobars
-    # @param [Symbol] *source_symbols symbols in the data to find the valid data.
-    def data_sources(*source_symbols)
-      raise ArgumentError, "You may only use .data_sources once" if @data_source_registry
-      @data_source_registry = ExcelTemplating::Document::DataSourceRegistry.new(source_symbols)
+    #   list_source :valid_foos, title: "Valid Foos", list: ['foo','bar'], inline: false
+    # @param [Symbol] source_symbol symbol to registry for the validator
+    # @param [String] title Title to show when displaying this validator
+    # @param [Array<String>] list items to use for validation
+    # @param [TrueClass|FalseClass] inline If true then the validator will be written to the document inline.
+    #                                       Otherwise it will be written to a 'DataSheet'
+    def list_source(source_symbol, title:, list:, inline: false)
+      data_source_registry.add_list(source_symbol, title, list, inline)
     end
 
     def data_source_registry
-      @data_source_registry || ExcelTemplating::Document::DataSourceRegistry.new([])
+      @data_source_registry ||= ExcelTemplating::Document::DataSourceRegistry.new
     end
 
     # Define a title for this workbook.  You may use mustaching here.

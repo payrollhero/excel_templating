@@ -1,63 +1,63 @@
 module ExcelTemplating
   class Document::DataSourceRegistry::RegistryRenderer
-    def initialize(source_symbols, data)
-      @source_symbols = source_symbols
+    def initialize(registry, data)
+      @registry = registry
       @data = data
     end
 
     def absolute_reference_for(source_symbol)
-      unless source_symbols.include?(source_symbol)
-        raise ArgumentError, "#{source_symbol} is not a defined data_source.  Defined data sources are" +
-              "#{source_symbols}"
+      unless registry.has_registry?(source_symbol)
+        raise ArgumentError, "#{source_symbol} is not a defined data_source.  Defined data sources are " +
+              "#{registry.supported_registries}"
       end
-      validation_options_for(source_symbol)
+      registry_info = registry[source_symbol]
+      validation_options_for(registry_info)
     end
 
     def write_sheet(workbook)
-      return unless source_symbols.length > 0
+      return unless registry.any_data_sheet_symbols?
 
       data_sheet = workbook.add_worksheet(sheet_name)
-      source_symbols.each_with_index do |source_symbol, index|
-        write_data_source_to_sheet(data_sheet, source_symbol, index)
+      registry.each do |registry_info|
+        write_data_source_to_sheet(data_sheet, registry_info)
       end
     end
 
     private
-    attr_reader :data, :source_symbols
+    attr_reader :data, :registry
 
-    def write_data_source_to_sheet data_sheet, source_symbol, index
-      validate_data_options(source_symbol)
-      valid_data = data[source_symbol]
-      column_letter = RenderHelper.letter_for(index + 1)
-      data_sheet.write "#{column_letter}1", valid_data[:title]
-      valid_data[:list].each_with_index do |item, item_index|
+    def write_data_source_to_sheet(data_sheet, registry_info)
+      column_letter = RenderHelper.letter_for(registry_info.order)
+      data_sheet.write "#{column_letter}1", registry_info.title
+      registry_info.items.each_with_index do |item, item_index|
         row_offset = item_index + 2
         data_sheet.write("#{column_letter}#{row_offset}", item)
       end
     end
 
-    def validation_options_for(source_symbol)
-      validate_data_options(source_symbol)
-      valid_data = data[source_symbol]
-      source_index = source_symbols.index(source_symbol)
-      row_letter = RenderHelper.letter_for(source_index + 1)
-      start_column = 2
-      end_column = valid_data.length + 1
-      list_validation(ref: "#{sheet_name}!$#{row_letter}$#{start_column}:$#{row_letter}$#{end_column}")
-    end
-
-    def validate_data_options(source_symbol)
-      valid_data = data[source_symbol]
-      unless valid_data.kind_of?(Hash) && valid_data.has_key?(:list) && valid_data.has_key?(:title) &&
-        valid_data[:list].kind_of?(Array)
-        raise ArgumentError, "#{source_symbol} must have :title (string) and :list (array)"
+    def validation_options_for(registry_info)
+      if registry_info.inline?
+        inline_validation_options(registry_info)
+      else
+        data_sheet_validation_options(registry_info)
       end
     end
 
-    def list_validation(ref:)
+    def data_sheet_validation_options(registry_info)
+      row_letter = RenderHelper.letter_for(registry_info.order)
+      start_column = 2
+      end_column = registry_info.items.length + 1
+      list_validation(source: "#{sheet_name}!$#{row_letter}$#{start_column}:$#{row_letter}$#{end_column}")
+    end
+
+    def inline_validation_options(registry_info)
+      list_validation(source: registry_info.items.map(&:to_s))
+    end
+
+    def list_validation(source:)
       {
         validate: 'list',
-        source: ref
+        source: source
       }
     end
 

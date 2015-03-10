@@ -49,7 +49,7 @@ them in your template.
     class MyTemplate < ExcelTemplating::Document
       template 'my_template.mustache.xlsx'
 
-      data_sources :valid_foos
+      list_source :valid_foos, title: "Foos", list: ["foo", "bar"]
       sheet 1 do
         validate_cell row: 5, column: 1, with: :valid_foos
         repeat_row 17, with :repeating_data do
@@ -60,8 +60,10 @@ them in your template.
 ```
 
 The excel templater will add an additional sheet to your generated xls
-file called 'Data Sources' and the data[:valid_foos] will end up
-in that sheet.
+file called 'Data Sources' and 'foo' and 'bar' will be written to that sheet.
+If you don't want a sheet to be created, use inline: true to write the validation
+directly to the cell, NOTE there are limits on the size of the list
+you may write inline.
 
 ## Rspec Excel Matching
 The library also adds an excel rspec matcher.
