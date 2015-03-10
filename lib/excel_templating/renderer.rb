@@ -93,7 +93,7 @@ module ExcelTemplating
 
         roo_rows(template_sheet).each do |row_number|
           sheet.each_row_at(row_number, sheet_data) do |row_data|
-            local_data = stringify_keys(data[:all_sheets].merge(row_data))
+            local_data = stringify_keys(data[:all_sheets]).merge(stringify_keys(row_data))
             roo_columns(template_sheet).each do |column_number|
               apply_data_to_cell(local_data, template_sheet, row_number, column_number)
               if sheet.validated_cell?(row_number, column_number)
