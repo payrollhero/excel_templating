@@ -1,5 +1,5 @@
 module ExcelAbstraction
-  class Time < DelegateClass(Float)
+  class Time < SimpleDelegator
     ADJUSTMENT = "1900-03-01 00:00 +00:00"
     REFERENCE = "1900-01-01 00:00 +00:00"
 
@@ -24,11 +24,19 @@ module ExcelAbstraction
     end
 
     def adjust(raw_value)
-      adjustment < raw_value ? 2.days : 1.day
+      adjustment < raw_value ? two_days : one_day
+    end
+
+    def two_days
+      one_day * 2.0
+    end
+
+    def one_day
+      60 * 60 * 24.to_f
     end
 
     def convert(raw_value)
-      (raw_value - reference + adjust(raw_value)).to_f / 1.day
+      (raw_value - reference + adjust(raw_value)).to_f / one_day
     end
   end
 end

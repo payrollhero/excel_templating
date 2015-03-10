@@ -2,8 +2,8 @@ require 'delegate'
 
 module ExcelAbstraction
   class Date < DelegateClass(Float)
-    ADJUSTMENT = "1900-03-01"
-    REFERENCE = "1900-01-01"
+    ADJUSTMENT = ::Date.parse("1900-03-01")
+    REFERENCE = ::Date.parse("1900-01-01")
 
     attr_reader :value
 
@@ -18,11 +18,11 @@ module ExcelAbstraction
     private
 
     def reference
-      REFERENCE.to_date
+      REFERENCE
     end
 
     def adjustment
-      ADJUSTMENT.to_date
+      ADJUSTMENT
     end
 
     def adjust(raw_value)

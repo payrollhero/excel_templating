@@ -11,7 +11,7 @@ describe ExcelAbstraction::CellRange do
     end
 
     it "enumerates over the cell references in the range" do
-      subject.sum { |cell| cell.row * cell.col }.should == 3
+      subject.inject(0) { |sum, cell| sum + (cell.row * cell.col) }.should == 3
     end
   end
 

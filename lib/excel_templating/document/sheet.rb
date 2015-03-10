@@ -50,7 +50,7 @@ module ExcelTemplating
     end
 
     def repeated_row?(row_number)
-      repeated_rows[row_number].present?
+      repeated_rows.has_key?(row_number)
     end
 
     def each_row_at(row_number, sheet_data)

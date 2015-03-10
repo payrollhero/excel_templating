@@ -1,7 +1,3 @@
-require 'active_support/core_ext/module/delegation'
-require 'active_support/core_ext/string'
-require 'active_support/core_ext/enumerable'
-require 'active_support/core_ext/integer'
 require 'write_xlsx'
 require 'writeexcel'
 

@@ -5,6 +5,7 @@ module ExcelTemplating
   # Render class for ExcelTemplating Documents.  Used by the Document to render the defined document
   # with the data to a new file.  Responsible for reading the template and applying the data to it
   class Renderer
+    extend Forwardable
 
     # @param [ExcelTemplating::Document] document Document to render with
     def initialize(document)
@@ -25,9 +26,9 @@ module ExcelTemplating
     private
 
     attr_reader :template_document, :spreadsheet, :template
-    delegate :workbook, to: :spreadsheet
-    delegate :data, to: :template_document
-    delegate :active_sheet, to: :workbook
+    delegate [:workbook] => :spreadsheet
+    delegate [:data] => :template_document
+    delegate [:active_sheet] => :workbook
 
     def template_path
       template_document.class.template_path
@@ -42,9 +43,16 @@ module ExcelTemplating
     end
 
     def apply_document_level_items
-      locals = data[:all_sheets].stringify_keys
-      workbook.title mustachify(template_document.class.document_title, locals: locals)
-      workbook.organization mustachify(template_document.class.document_organization, locals: locals)
+      workbook.title mustachify(template_document.class.document_title, locals: common_data_variables)
+      workbook.organization mustachify(template_document.class.document_organization, locals: common_data_variables)
+    end
+
+    def common_data_variables
+      stringify_keys(data[:all_sheets])
+    end
+
+    def stringify_keys(hash)
+      Hash[hash.map{ |k, v| [k.to_s, v] }]
     end
 
     def style_columns(sheet, template_sheet)
@@ -73,7 +81,7 @@ module ExcelTemplating
 
         roo_rows(template_sheet).each do |row_number|
           sheet.each_row_at(row_number, sheet_data) do |row_data|
-            local_data = data[:all_sheets].merge(row_data).stringify_keys
+            local_data = stringify_keys(data[:all_sheets].merge(row_data))
             roo_columns(template_sheet).each do |column_letter|
               apply_data_to_cell(local_data, template_sheet, row_number, column_letter)
             end

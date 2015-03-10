@@ -1,10 +1,10 @@
 module ExcelAbstraction
   class Row
     include Enumerable
+    extend Forwardable
 
     attr_accessor :styles
-
-    delegate :each, to: :cells
+    delegate [:each] => :cells
 
     alias :first :min
     alias :last :max
@@ -19,7 +19,7 @@ module ExcelAbstraction
     end
 
     def <<(attrs)
-      self.cells << ExcelAbstraction::Cell.new(attrs)
+      @cells << ExcelAbstraction::Cell.new(attrs)
     end
 
     protected
