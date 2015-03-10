@@ -29,7 +29,7 @@ module ExcelTemplating
     def write_data_source_to_sheet(data_sheet, registry_info)
       column_letter = RenderHelper.letter_for(registry_info.order)
       data_sheet.write "#{column_letter}1", registry_info.title
-      registry_info.items.each_with_index do |item, item_index|
+      registry_info.items(data).each_with_index do |item, item_index|
         row_offset = item_index + 2
         data_sheet.write("#{column_letter}#{row_offset}", item)
       end
@@ -46,12 +46,12 @@ module ExcelTemplating
     def data_sheet_validation_options(registry_info)
       row_letter = RenderHelper.letter_for(registry_info.order)
       start_column = 2
-      end_column = registry_info.items.length + 1
+      end_column = registry_info.items(data).length + 1
       list_validation(source: "#{sheet_name}!$#{row_letter}$#{start_column}:$#{row_letter}$#{end_column}")
     end
 
     def inline_validation_options(registry_info)
-      list_validation(source: registry_info.items.map(&:to_s))
+      list_validation(source: registry_info.items(data).map(&:to_s))
     end
 
     def list_validation(source:)

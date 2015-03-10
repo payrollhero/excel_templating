@@ -40,6 +40,46 @@ describe 'cell validation' do
     end
   end
 
+  context "list taken from the data" do
+    class SimpleFromDataValidatedDocument < ExcelTemplating::Document
+      template "spec/assets/valid_cell.mustache.xlsx"
+      title "Valid cell test"
+      organization "Unimportant"
+      default_styling(
+        text_wrap: 0,
+        font: "Calibri",
+        size: 10,
+        align: :left,
+      )
+      list_source :valid_foos, title: "Foos", list: :from_data
+      sheet 1 do
+        validate_cell row: 2, column: 1, with: :valid_foos
+      end
+    end
+
+    subject { SimpleFromDataValidatedDocument.new(data) }
+
+    let(:data) {
+      {
+        all_sheets:
+          {
+            valid_foos: ["foo","bar"],
+            valid_value: "foo",
+          }
+      }
+    }
+
+    describe "#render" do
+      it do
+        expect do
+          subject.render do |path|
+            expect(path).to match_excel_content('spec/assets/valid_cell_expected.xlsx')
+          end
+        end.not_to raise_error
+      end
+    end
+  end
+
   context "rendered inline" do
     class InlineCellValidatedDocument < ExcelTemplating::Document
       template "spec/assets/valid_cell.mustache.xlsx"

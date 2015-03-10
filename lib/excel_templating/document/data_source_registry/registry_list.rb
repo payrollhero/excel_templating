@@ -19,13 +19,19 @@ module ExcelTemplating
       !inline?
     end
 
-    alias_method :items, :list
+    def items(data)
+      if list == :from_data
+        data[symbol]
+      else
+        list
+      end
+    end
 
     private
 
     def pre_validate!
-      unless list.kind_of?(Array)
-        raise ArgumentError, "List must be an array."
+      unless list.kind_of?(Array) || list == :from_data
+        raise ArgumentError, "List must be an array or :from_data"
       end
     end
   end

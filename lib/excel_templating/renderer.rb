@@ -32,6 +32,15 @@ module ExcelTemplating
     delegate [:workbook] => :spreadsheet
     delegate [:data] => :template_document
     delegate [:active_sheet] => :workbook
+    delegate [:active_cell_reference] => :active_sheet
+
+    def current_row
+      active_cell_reference.row
+    end
+
+    def current_col
+      active_cell_reference.col
+    end
 
     def template_path
       template_document.class.template_path
@@ -162,7 +171,9 @@ module ExcelTemplating
     def add_validation(sheet, row_number, column_number)
       raise ArgumentError, "No :data_sources defined for validation!" unless data_source_registry
       source = sheet.validation_source(row_number, column_number)
-      active_sheet.data_validation absolute_reference(row_number, column_number),
+      #Use current_row and current_col here because row_number and column_number refer to the template
+      #sheet and we want to write a reference to the cell we just wrote
+      active_sheet.data_validation absolute_reference(current_row + 1, current_col),
                                    registry_renderer.absolute_reference_for(source)
     end
 

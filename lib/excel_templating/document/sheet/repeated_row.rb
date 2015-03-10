@@ -20,6 +20,10 @@ module ExcelTemplating
       @column_validations[column_number] = with
     end
 
+    def validated_column_source(column_number)
+      @column_validations[column_number]
+    end
+
     def validated_column?(column_number)
       @column_validations.has_key?(column_number)
     end

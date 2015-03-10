@@ -36,7 +36,8 @@ module ExcelTemplating
     #   list_source :valid_foos, title: "Valid Foos", list: ['foo','bar'], inline: false
     # @param [Symbol] source_symbol symbol to registry for the validator
     # @param [String] title Title to show when displaying this validator
-    # @param [Array<String>] list items to use for validation
+    # @param [Array<String>|Symbol] list items to use for validation, you may also use :from_data and at render time
+    #                                    the validation items will be fetched from key 'source_symbol'
     # @param [TrueClass|FalseClass] inline If true then the validator will be written to the document inline.
     #                                       Otherwise it will be written to a 'DataSheet'
     def list_source(source_symbol, title:, list:, inline: false)

@@ -59,6 +59,9 @@ them in your template.
     end
 ```
 
+The 'list' item may be an Array or :from_data, if it says :from_data, the list
+will be sourced from the same key in the 'all_sheets' data portion.
+
 The excel templater will add an additional sheet to your generated xls
 file called 'Data Sources' and 'foo' and 'bar' will be written to that sheet.
 If you don't want a sheet to be created, use inline: true to write the validation
