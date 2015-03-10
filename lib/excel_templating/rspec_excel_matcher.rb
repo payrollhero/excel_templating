@@ -70,9 +70,13 @@ class RSpec::Matchers::ExcelMatcher
   def sheets_equal?(expected_workbook, actual_workbook)
     expected_workbook.sheets.all? do |sheet_name|
       expected = expected_workbook.sheet(sheet_name)
-      actual = actual_workbook.sheet(sheet_name) rescue nil
+      actual = begin
+        actual_workbook.sheet(sheet_name)
+      rescue
+        nil
+      end
 
-      check(actual != nil, "Sheet names do not match.")
+      check(actual, "Sheet names do not match.") if actual != nil
       check(expected.first_row == actual.first_row, "Number of rows do not match.")
       check(expected.last_row == actual.last_row, "Number of rows do not match")
       check(expected.first_column == actual.first_column, "Number of columns do not match")
@@ -87,7 +91,7 @@ class RSpec::Matchers::ExcelMatcher
     (sheet1.first_row .. sheet1.last_row).each do |row|
       (sheet1.first_column .. sheet1.last_column).each do |col|
         check(sheet1.cell(row, col) == sheet2.cell(row, col),
-          discrepancy_message(col, row, sheet1, sheet2))
+              discrepancy_message(col, row, sheet1, sheet2))
       end
     end
 

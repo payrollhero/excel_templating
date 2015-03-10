@@ -27,12 +27,12 @@ Gem::Tasks.new(release: false)
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new
 
-task :test    => :spec
-task :default => :spec
+task test: :spec
+task default: :spec
 
 require 'yard'
 YARD::Rake::YardocTask.new
-task :doc => :yard
+task doc: :yard
 
 task :release do
   Rake::Task['fury:release'].invoke(nil, 'payrollhero')

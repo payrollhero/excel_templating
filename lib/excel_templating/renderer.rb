@@ -52,7 +52,7 @@ module ExcelTemplating
     end
 
     def stringify_keys(hash)
-      Hash[hash.map{ |k, v| [k.to_s, v] }]
+      Hash[hash.map { |k, v| [k.to_s, v] } ]
     end
 
     def style_columns(sheet, template_sheet)
