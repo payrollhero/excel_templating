@@ -51,3 +51,4 @@ module ExcelTemplating
 end
 
 require_relative 'document/sheet'
+require_relative 'document/data_source_registry'

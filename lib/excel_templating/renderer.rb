@@ -10,14 +10,17 @@ module ExcelTemplating
     # @param [ExcelTemplating::Document] document Document to render with
     def initialize(document)
       @template_document = document
+      @data_source_registry = document.class.data_source_registry
     end
 
     # Render the document provided.  Yields the path to the tempfile created.
     def render
       @spreadsheet = ExcelAbstraction::SpreadSheet.new(format: :xlsx)
       @template = Roo::Spreadsheet.open(template_path)
+      @registry_renderer = data_source_registry.renderer(data: data[:all_sheets])
       apply_document_level_items
       apply_data_to_sheets
+      registry_renderer.write_sheet(@spreadsheet.workbook)
 
       @spreadsheet.close
       yield(spreadsheet.path)
@@ -25,7 +28,7 @@ module ExcelTemplating
 
     private
 
-    attr_reader :template_document, :spreadsheet, :template
+    attr_reader :template_document, :spreadsheet, :template, :registry_renderer, :data_source_registry
     delegate [:workbook] => :spreadsheet
     delegate [:data] => :template_document
     delegate [:active_sheet] => :workbook
@@ -82,8 +85,11 @@ module ExcelTemplating
         roo_rows(template_sheet).each do |row_number|
           sheet.each_row_at(row_number, sheet_data) do |row_data|
             local_data = stringify_keys(data[:all_sheets].merge(row_data))
-            roo_columns(template_sheet).each do |column_letter|
-              apply_data_to_cell(local_data, template_sheet, row_number, column_letter)
+            roo_columns(template_sheet).each do |column_number|
+              apply_data_to_cell(local_data, template_sheet, row_number, column_number)
+              if sheet.validated_cell?(row_number, column_number)
+                add_validation(sheet, row_number, column_number)
+              end
             end
             active_sheet.next_row
           end
@@ -92,9 +98,9 @@ module ExcelTemplating
       end
     end
 
-    def apply_data_to_cell(local_data, template_sheet, row_number, column_letter)
-      template_cell = template_sheet.cell(row_number, column_letter)
-      font = template_sheet.font(row_number, column_letter)
+    def apply_data_to_cell(local_data, template_sheet, row_number, column_number)
+      template_cell = template_sheet.cell(row_number, column_number)
+      font = template_sheet.font(row_number, column_number)
       format = format_for(font)
       value = mustachify(template_cell, locals: local_data)
 
@@ -151,6 +157,17 @@ module ExcelTemplating
 
     def whole_cell_template?(template)
       template =~ whole_cell_template_matcher
+    end
+
+    def add_validation(sheet, row_number, column_number)
+      raise ArgumentError, "No :data_sources defined for validation!" unless data_source_registry
+      source = sheet.validation_source(row_number, column_number)
+      active_sheet.data_validation absolute_reference(row_number, column_number),
+                                   registry_renderer.absolute_reference_for(source)
+    end
+
+    def absolute_reference(row_number, column_number)
+      "$#{RenderHelper.letter_for(column_number)}$#{row_number}"
     end
 
     class MustacheRenderer < Mustache

@@ -41,6 +41,28 @@ A library that does excel templating using mustaching.
     end
 ```
 
+## Cell Validation
+You may validate that cells belong to a particular set of values 'dropdown'
+this is done by specifying data sources for your sheet and then referencing
+them in your template.
+``` ruby
+    class MyTemplate < ExcelTemplating::Document
+      template 'my_template.mustache.xlsx'
+
+      data_sources :valid_foos
+      sheet 1 do
+        validate_cell row: 5, column: 1, with: :valid_foos
+        repeat_row 17, with :repeating_data do
+          validate_column 1, with: :valid_foos
+        end
+      end
+    end
+```
+
+The excel templater will add an additional sheet to your generated xls
+file called 'Data Sources' and the data[:valid_foos] will end up
+in that sheet.
+
 ## Rspec Excel Matching
 The library also adds an excel rspec matcher.
 ```ruby

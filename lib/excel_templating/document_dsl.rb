@@ -31,6 +31,19 @@ module ExcelTemplating
       nil
     end
 
+    # Define the data sources for validation in this document
+    # @example
+    #   data_sources :valid_foos, :valid_foobars
+    # @param [Symbol] *source_symbols symbols in the data to find the valid data.
+    def data_sources(*source_symbols)
+      raise ArgumentError, "You may only use .data_sources once" if @data_source_registry
+      @data_source_registry = ExcelTemplating::Document::DataSourceRegistry.new(source_symbols)
+    end
+
+    def data_source_registry
+      @data_source_registry || ExcelTemplating::Document::DataSourceRegistry.new([])
+    end
+
     # Define a title for this workbook.  You may use mustaching here.
     # @param [String] string
     def title(string)
