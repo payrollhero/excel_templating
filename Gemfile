@@ -6,4 +6,5 @@ group :development do
   gem 'kramdown'
   gem 'rubocop'
   gem 'byebug'
+  gem 'gemfury'
 end
