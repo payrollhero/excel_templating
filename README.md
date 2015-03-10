@@ -1,6 +1,6 @@
 # excel_templating
 
-* [Homepage](https://rubygems.org/gems/excel_templating)
+* [Homepage](https://github.com/payrollhero/excel_templating)
 * [Documentation](http://rubydoc.info/gems/excel_templating/frames)
 * [Email](mailto:bramski at gmail.com)
 

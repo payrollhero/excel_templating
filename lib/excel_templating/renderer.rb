@@ -170,7 +170,7 @@ module ExcelTemplating
 
     def add_validation(sheet, row_number, column_number)
       raise ArgumentError, "No :data_sources defined for validation!" unless data_source_registry
-      source = sheet.validation_source(row_number, column_number)
+      source = sheet.validation_source_name(row_number, column_number)
       #Use current_row and current_col here because row_number and column_number refer to the template
       #sheet and we want to write a reference to the cell we just wrote
       active_sheet.data_validation absolute_reference(current_row + 1, current_col),

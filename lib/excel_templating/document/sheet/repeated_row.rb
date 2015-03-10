@@ -9,9 +9,9 @@ module ExcelTemplating
       @column_validations = {}
     end
 
-    attr_reader :row_number, :data_attribute
+    ### Dsl Methods ###
 
-    # Validate a particular row in a repeeated set as being part of a declared data source
+    # Validate a particular row in a repeated set as being part of a declared data source
     # @example
     #   validate_column 5, with: :valid_foos
     # @param [Integer] column_number
@@ -20,10 +20,18 @@ module ExcelTemplating
       @column_validations[column_number] = with
     end
 
+    ### Non Dsl Methods ###
+
+    attr_reader :row_number, :data_attribute
+
+    # @param [Integer] column_number
+    # @return [Symbol] Registered source at that column
     def validated_column_source(column_number)
       @column_validations[column_number]
     end
 
+    # @param [Integer] column_number
+    # @return [TrueClass|FalseClass]
     def validated_column?(column_number)
       @column_validations.has_key?(column_number)
     end

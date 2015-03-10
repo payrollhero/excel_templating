@@ -12,6 +12,8 @@ module ExcelTemplating
       @validated_cells = {}
     end
 
+    ### Sheet Dsl Methods ####
+
     # @param [Float] decimal_inches
     # @return [Float] inches converted to excel integer size.
     def inches(decimal_inches)
@@ -49,6 +51,9 @@ module ExcelTemplating
       validated_cells["#{row}:#{column}"] = with
     end
 
+
+    #### Non DSL Methods ###
+
     def default_column_style
       @default_column_style
     end
@@ -61,16 +66,22 @@ module ExcelTemplating
       data[sheet_number] || {}
     end
 
+    # @param [Integer] row_number
     def repeated_row?(row_number)
       repeated_rows.has_key?(row_number)
     end
 
+    # @param [Integer] row_number
+    # @param [Integer] column_number
     def validated_cell?(row_number, column_number)
       (repeated_row?(row_number) && repeated_rows[row_number].validated_column?(column_number)) ||
         validated_cells.has_key?("#{row_number}:#{column_number}")
     end
 
-    def validation_source(row_number, column_number)
+    # @param [Integer] row_number
+    # @param [Integer] column_number
+    # @return [Symbol] The registered symbol for that row & column or Nil
+    def validation_source_name(row_number, column_number)
       if repeated_row?(row_number)
         repeated_rows[row_number].validated_column_source(column_number)
       else
@@ -78,6 +89,9 @@ module ExcelTemplating
       end
     end
 
+    # Repeat each row of the data if it is repeated, yielding each item in succession.
+    # @param [Integer] row_number
+    # @param [Hash] sheet_data Data for this sheet
     def each_row_at(row_number, sheet_data)
       if repeated_row?(row_number)
         repeater = repeated_rows[row_number]

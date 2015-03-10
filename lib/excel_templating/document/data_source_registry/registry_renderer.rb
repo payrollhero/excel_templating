@@ -1,10 +1,13 @@
 module ExcelTemplating
+  # In charge of rendering the data source registry to the excel document
   class Document::DataSourceRegistry::RegistryRenderer
     def initialize(registry, data)
       @registry = registry
       @data = data
     end
 
+    # @param [Symbol] source_symbol
+    # @return [Hash] Gives back a hash of options which adds the validation options for the symbol
     def absolute_reference_for(source_symbol)
       unless registry.has_registry?(source_symbol)
         raise ArgumentError, "#{source_symbol} is not a defined data_source.  Defined data sources are " +
@@ -14,6 +17,8 @@ module ExcelTemplating
       validation_options_for(registry_info)
     end
 
+    # Wrote this registry to the specified workbook.  Uses the sheet name 'DataSource'
+    # @param [ExcelAbstraction::Workbook] workbook
     def write_sheet(workbook)
       return unless registry.any_data_sheet_symbols?
 

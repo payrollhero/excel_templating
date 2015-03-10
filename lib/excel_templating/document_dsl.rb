@@ -40,7 +40,7 @@ module ExcelTemplating
     #                                    the validation items will be fetched from key 'source_symbol'
     # @param [TrueClass|FalseClass] inline If true then the validator will be written to the document inline.
     #                                       Otherwise it will be written to a 'DataSheet'
-    def list_source(source_symbol, title:, list:, inline: false)
+    def list_source(source_symbol, title:, list: :from_data, inline: false)
       data_source_registry.add_list(source_symbol, title, list, inline)
     end
 
@@ -72,21 +72,6 @@ module ExcelTemplating
     # @param [String] string
     def organization(string)
       @document_organization = string
-    end
-
-    # @return [String] The document title
-    def document_title
-      @document_title
-    end
-
-    # @return [String] The document organization
-    def document_organization
-      @document_organization
-    end
-
-    # @return [Hash] The default styling for the document
-    def document_default_styling
-      @default_styling || default_styling
     end
   end
 end

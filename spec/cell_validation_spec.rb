@@ -51,7 +51,7 @@ describe 'cell validation' do
         size: 10,
         align: :left,
       )
-      list_source :valid_foos, title: "Foos", list: :from_data
+      list_source :valid_foos, title: "Foos"
       sheet 1 do
         validate_cell row: 2, column: 1, with: :valid_foos
       end
