@@ -1,3 +1,5 @@
+require 'bundler'
+Bundler.setup
 require 'rspec'
 require 'excel_templating/version'
 require 'excel_templating'
