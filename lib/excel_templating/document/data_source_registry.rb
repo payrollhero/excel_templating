@@ -10,7 +10,6 @@ module ExcelTemplating
       @source_symbols = {}
     end
 
-
     # @param [Hash] data
     # @return [RegistryRenderer]
     def renderer(data:)
@@ -38,7 +37,7 @@ module ExcelTemplating
 
     # @return [TrueClass|FalseClass]
     def any_data_sheet_symbols?
-      self.select {|info|
+      select {|info|
         info.data_sheet?
       }.any?
     end
@@ -51,6 +50,7 @@ module ExcelTemplating
     delegate [:each] => :ordered_registries
 
     private
+
     attr_reader :source_symbols
 
     def ordered_registries

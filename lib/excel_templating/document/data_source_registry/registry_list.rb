@@ -40,7 +40,7 @@ module ExcelTemplating
     private
 
     def pre_validate!
-      unless list.kind_of?(Array) || list == :from_data
+      unless list.is_a?(Array) || list == :from_data
         raise ArgumentError, "List must be an array or :from_data"
       end
     end

@@ -50,8 +50,7 @@ module ExcelTemplating
     def validate_cell(row:, column:, with:)
       validated_cells["#{row}:#{column}"] = with
     end
-
-
+    
     #### Non DSL Methods ###
 
     def default_column_style

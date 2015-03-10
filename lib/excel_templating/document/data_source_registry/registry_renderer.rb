@@ -29,6 +29,7 @@ module ExcelTemplating
     end
 
     private
+
     attr_reader :data, :registry
 
     def write_data_source_to_sheet(data_sheet, registry_info)

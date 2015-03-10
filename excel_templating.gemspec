@@ -5,15 +5,15 @@ require File.expand_path('../lib/excel_templating/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = "excel_templating"
   gem.version       = ExcelTemplating::VERSION
-  gem.summary       = %q{A library which allows you to slam data into excel files using mustaching.}
-  gem.description   = %q{.}
+  gem.summary       = "A library which allows you to slam data into excel files using mustaching."
+  gem.description   = "."
   gem.license       = "MIT"
   gem.authors       = ["bramski"]
   gem.email         = "bramski@gmail.com"
   gem.homepage      = "https://github.com/payrollhero/excel_templating"
 
   gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
