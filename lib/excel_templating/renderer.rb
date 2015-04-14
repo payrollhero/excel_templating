@@ -129,17 +129,21 @@ module ExcelTemplating
     end
 
     def format_for(font)
-      @font_formats ||= {}
-      unless @font_formats.has_key?(font)
-        format = workbook.add_format(
-          {
-            bold: font.bold? ? 1 : 0,
-            italic: font.italic? ? 1 : 0,
-            underline: font.underline? ? 1 : 0
-          }.merge(default_format_styling))
-        @font_formats[font] = format
+      font_formats[font]
+    end
+
+    def font_formats
+      @font_formats ||= Hash.new do |cache, font|
+        template_font = font || Roo::Font.new
+
+        format_details = {
+          bold: template_font.bold? ? 1 : 0,
+          italic: template_font.italic? ? 1 : 0,
+          underline: template_font.underline? ? 1 : 0
+        }.merge(default_format_styling)
+
+        cache[font] = workbook.add_format format_details
       end
-      @font_formats[font]
     end
 
     def mustachify(inline_template, locals: {})
