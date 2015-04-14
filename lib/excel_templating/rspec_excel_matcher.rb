@@ -1,4 +1,5 @@
 require 'roo'
+require "roo-xls"
 
 # Matcher for rspec 'match_excel_content'
 # @example

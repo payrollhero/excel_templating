@@ -18,7 +18,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
 
   gem.add_dependency "mustache"
-  gem.add_dependency "roo"
+  gem.add_dependency "roo", ">= 2.0.0beta1", "< 3"
+  gem.add_dependency "roo-xls"
   gem.add_dependency "write_xlsx"
   gem.add_dependency "writeexcel"
 
