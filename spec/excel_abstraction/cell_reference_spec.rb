@@ -9,7 +9,7 @@ describe ExcelAbstraction::CellReference do
         let(:other){ described_class.new(row: 1, col: 0) }
 
         it "returns 1" do
-          (subject <=> other).should == 1
+          expect(subject <=> other).to eq 1
         end
       end
 
@@ -17,7 +17,7 @@ describe ExcelAbstraction::CellReference do
         let(:other){ described_class.new(row: 1, col: 1) }
 
         it "returns 0" do
-          (subject <=> other).should == 0
+          expect(subject <=> other).to eq 0
         end
       end
 
@@ -25,7 +25,7 @@ describe ExcelAbstraction::CellReference do
         let(:other){ described_class.new(row: 1, col: 2) }
 
         it "returns -1" do
-          (subject <=> other).should == -1
+          expect(subject <=> other).to eq -1
         end
       end
     end
@@ -34,7 +34,7 @@ describe ExcelAbstraction::CellReference do
       let(:other){ described_class.new(row: 0, col: 0) }
 
       it "returns 1" do
-        (subject <=> other).should == 1
+        expect(subject <=> other).to eq 1
       end
     end
 
@@ -42,28 +42,28 @@ describe ExcelAbstraction::CellReference do
       let(:other){ described_class.new(row: 2, col: 0) }
 
       it "returns -1" do
-        (subject <=> other).should == -1
+        expect(subject <=> other).to eq -1
       end
     end
   end
 
   describe "#succ" do
-    its(:succ){ should == described_class.new(row: 1, col: 2) }
+    its(:succ){ is_expected.to eq described_class.new(row: 1, col: 2) }
   end
 
   describe "#to_s" do
-    its(:to_s){ should == "B2"}
+    its(:to_s){ is_expected.to eq "B2"}
   end
 
   describe "#to_cell_reference" do
-    its(:to_cell_reference){ should == subject }
+    its(:to_cell_reference){ is_expected.to eq subject }
   end
 
   describe "#to_ary" do
-    its(:to_ary){ should == [1, 1] }
+    its(:to_ary){ is_expected.to eq [1, 1] }
   end
 
   describe "#to_a" do
-    its(:to_a){ should == [1, 1] }
+    its(:to_a){ is_expected.to eq [1, 1] }
   end
 end

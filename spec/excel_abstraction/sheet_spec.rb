@@ -12,8 +12,8 @@ describe ExcelAbstraction::Sheet do
           subject.header("Foo")
         end
 
-        excel.cell("A", 1).should == "Foo"
-        excel.font("A", 1).should be_bold
+        expect(excel.cell("A", 1)).to eq "Foo"
+        expect(excel.font("A", 1)).to be_bold
       end
     end
   end
@@ -25,10 +25,10 @@ describe ExcelAbstraction::Sheet do
           subject.header(["Foo", "Bar"])
         end
 
-        excel.cell("A", 1).should == "Foo"
-        excel.font("A", 1).should be_bold
-        excel.cell("B", 1).should == "Bar"
-        excel.font("B", 1).should be_bold
+        expect(excel.cell("A", 1)).to eq "Foo"
+        expect(excel.font("A", 1)).to be_bold
+        expect(excel.cell("B", 1)).to eq "Bar"
+        expect(excel.font("B", 1)).to be_bold
       end
     end
   end
@@ -40,7 +40,7 @@ describe ExcelAbstraction::Sheet do
           subject.cell("Foo")
         end
 
-        excel.cell("A", 1).should == "Foo"
+        expect(excel.cell("A", 1)).to eq "Foo"
       end
     end
   end
@@ -52,8 +52,8 @@ describe ExcelAbstraction::Sheet do
           subject.cells(["Foo", "Bar"])
         end
 
-        excel.cell("A", 1).should == "Foo"
-        excel.cell("B", 1).should == "Bar"
+        expect(excel.cell("A", 1)).to eq "Foo"
+        expect(excel.cell("B", 1)).to eq "Bar"
       end
     end
   end
@@ -66,9 +66,9 @@ describe ExcelAbstraction::Sheet do
           subject.cell("Bar")
         end
 
-        excel.cell("A", 1).should == "Foo"
-        excel.cell("B", 1).should be_nil
-        excel.cell("C", 1).should == "Bar"
+        expect(excel.cell("A", 1)).to eq "Foo"
+        expect(excel.cell("B", 1)).to be_nil
+        expect(excel.cell("C", 1)).to eq "Bar"
       end
     end
   end

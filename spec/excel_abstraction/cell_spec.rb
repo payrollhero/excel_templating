@@ -8,7 +8,7 @@ describe ExcelAbstraction::Cell do
       let(:other){ described_class.new(position: 0, val: nil) }
 
       it "return 1" do
-        (subject <=> other).should == 1
+        expect(subject <=> other).to eq 1
       end
     end
 
@@ -16,7 +16,7 @@ describe ExcelAbstraction::Cell do
       let(:other){ described_class.new(position: 1, val: nil) }
 
       it "return 0" do
-        (subject <=> other).should == 0
+        expect(subject <=> other).to eq 0
       end
     end
 
@@ -24,7 +24,7 @@ describe ExcelAbstraction::Cell do
       let(:other){ described_class.new(position: 2, val: nil) }
 
       it "return -1" do
-        (subject <=> other).should == -1
+        expect(subject <=> other).to eq -1
       end
     end
   end
@@ -34,7 +34,7 @@ describe ExcelAbstraction::Cell do
       let(:other){ described_class.new(position: 1, val: "CellValue", style: {bold: true}) }
 
       it "returns true" do
-        (subject == other).should be true
+        expect(subject == other).to be_truthy
       end
     end
 
@@ -42,13 +42,13 @@ describe ExcelAbstraction::Cell do
       let(:other){ described_class.new(position: 1, val: "OtherCellValue", style: {bold: true}) }
 
       it "returns false" do
-        (subject == other).should be false
+        expect(subject == other).to be_falsey
       end
     end
   end
 
   describe "#to_cell" do
-    its(:to_cell){ should == subject }
+    its(:to_cell){ is_expected.to eq subject }
   end
 
 end
