@@ -5,15 +5,15 @@ describe ExcelAbstraction::SpreadSheet do
   describe "#close" do
     it "closes the excel file" do
       subject.close
-      subject.should be_closed
+      expect(subject).to be_closed
     end
 
     context "when a block is passed" do
       it "executes the block before closing the excel file" do
         test = 0
         subject.close { test += 1 }
-        test.should eq(1)
-        subject.should be_closed
+        expect(test).to eq(1)
+        expect(subject).to be_closed
       end
     end
   end
@@ -29,7 +29,7 @@ describe ExcelAbstraction::SpreadSheet do
       }.to_not raise_exception
 
       File.unlink(file.path)
-      subject.should be_closed
+      expect(subject).to be_closed
     end
   end
 end

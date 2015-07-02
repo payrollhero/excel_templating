@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = "A library which allows you to slam data into excel files using mustaching."
   gem.description   = "."
   gem.license       = "MIT"
-  gem.authors       = ["bramski"]
+  gem.authors       = ["bramski", "Mykola Kyryk"]
   gem.email         = "bramski@gmail.com"
   gem.homepage      = "https://github.com/payrollhero/excel_templating"
 
@@ -25,7 +25,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'bundler', '~> 1.0'
   gem.add_development_dependency 'rake', '~> 0.8'
-  gem.add_development_dependency 'rspec', '~> 2.4'
+  gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'rubygems-tasks', '~> 0.2'
   gem.add_development_dependency 'yard', '~> 0.8'
   gem.add_development_dependency 'rspec-its'

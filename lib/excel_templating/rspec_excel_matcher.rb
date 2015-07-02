@@ -9,7 +9,6 @@ require "roo-xls"
 #     end
 #   end
 RSpec::Matchers.define :match_excel_content do |expected_excel_path|
-
   match do |excel_path|
     @excel_matcher = RSpec::Matchers::ExcelMatcher.new
     @excel_matcher.expected_roo = Roo::Spreadsheet.open(expected_excel_path)
@@ -17,15 +16,14 @@ RSpec::Matchers.define :match_excel_content do |expected_excel_path|
     @excel_matcher.match?
   end
 
-  failure_message_for_should do |excel_path|
+  failure_message do |excel_path|
     "expected excel:#{expected_excel_path} to exactly match the content of #{excel_path} but did not.\n" +
       @excel_matcher.errors.join("\n") + "\n"
   end
 
-  failure_message_for_should_not do |excel_path|
+  failure_message_when_negated do |excel_path|
     "expected excel:#{expected_excel_path} to not exactly match the content of #{excel_path} but it did."
   end
-
 end
 
 # Specific Matcher class helper for comparing two excel documents.

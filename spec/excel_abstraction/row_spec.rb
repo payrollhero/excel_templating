@@ -11,7 +11,7 @@ describe ExcelAbstraction::Row do
     end
 
     it "enumerates over the cell references in the range" do
-      subject.reduce(""){ |str, cell| str += cell.val }.should == "foobarbaz"
+      expect(subject.reduce(""){ |str, cell| str += cell.val }).to eq "foobarbaz"
     end
   end
 
@@ -23,7 +23,7 @@ describe ExcelAbstraction::Row do
     end
 
     it "returns the cell with the given position" do
-      subject[1].val.should eq("bar")
+      expect(subject[1].val).to eq("bar")
     end
   end
 
@@ -35,7 +35,7 @@ describe ExcelAbstraction::Row do
     context "when the cell to be inserted is in the same row" do
       it "inserts the cell" do
         subject << {position: 1, val: "bar"}
-        subject.count.should == 2
+        expect(subject.count).to eq 2
       end
     end
   end

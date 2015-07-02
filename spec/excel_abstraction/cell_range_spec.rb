@@ -11,7 +11,7 @@ describe ExcelAbstraction::CellRange do
     end
 
     it "enumerates over the cell references in the range" do
-      subject.inject(0) { |sum, cell| sum + (cell.row * cell.col) }.should == 3
+      expect(subject.inject(0) { |sum, cell| sum + (cell.row * cell.col) }).to eq 3
     end
   end
 
@@ -29,7 +29,7 @@ describe ExcelAbstraction::CellRange do
     context "when the cell to be inserted is in the same row" do
       it "inserts the cell" do
         subject << {row: 1, col: 1}
-        subject.last.should eq(ExcelAbstraction::CellReference.new(row: 1, col: 1))
+        expect(subject.last).to eq(ExcelAbstraction::CellReference.new(row: 1, col: 1))
       end
     end
   end
