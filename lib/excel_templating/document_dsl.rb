@@ -31,6 +31,14 @@ module ExcelTemplating
       nil
     end
 
+    def protect_document(protect=true)
+      @protected = protect
+    end
+
+    def protected?
+      !!@protected
+    end
+
     # Add a list validator to the excel document
     # @example
     #   list_source :valid_foos, title: "Valid Foos", list: ['foo','bar'], inline: false

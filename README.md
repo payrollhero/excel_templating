@@ -68,6 +68,35 @@ If you don't want a sheet to be created, use inline: true to write the validatio
 directly to the cell, NOTE there are limits on the size of the list
 you may write inline.
 
+## Protecting document
+You can specify locking for any row or column. By default all cells are marked as locked.
+Locking is applied when you call `protect_document` method.
+``` ruby
+    class MyTemplate < ExcelTemplating::Document
+      template 'my_template.mustache.xlsx'
+      default_styling locked: 0 # default set to not locked
+
+      list_source :valid_foos, title: "Foos", list: ["foo", "bar"]
+      sheet 1 do
+        validate_cell row: 5, column: 1, with: :valid_foos
+        repeat_row 17, with :repeating_data do
+          validate_column 1, with: :valid_foos
+        end
+
+        # Lets lock the first row
+        style_rows(
+          default: { },
+          rows: {
+            1 => { format: { locked: 1 } }
+          }
+        )
+      end
+
+      # add call `protect_document` to lock specified row
+      protect_document
+    end
+```
+
 ## Rspec Excel Matching
 The library also adds an excel rspec matcher.
 ```ruby

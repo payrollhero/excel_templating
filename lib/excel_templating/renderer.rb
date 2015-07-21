@@ -20,6 +20,7 @@ module ExcelTemplating
       @registry_renderer = data_source_registry.renderer(data: data[:all_sheets])
       apply_document_level_items
       apply_data_to_sheets
+      protect_spreadsheet
       registry_renderer.write_sheet(@spreadsheet.workbook)
 
       @spreadsheet.close
@@ -28,7 +29,7 @@ module ExcelTemplating
 
     private
 
-    attr_reader :template_document, :spreadsheet, :template, :registry_renderer, :data_source_registry
+    attr_reader :template_document, :spreadsheet, :template, :registry_renderer, :data_source_registry, :current_sheet
     delegate [:workbook] => :spreadsheet
     delegate [:data] => :template_document
     delegate [:active_sheet] => :workbook
@@ -48,6 +49,10 @@ module ExcelTemplating
 
     def default_format_styling
       template_document.class.document_default_styling
+    end
+
+    def protected?
+      template_document.class.protected?
     end
 
     def sheets
@@ -78,6 +83,17 @@ module ExcelTemplating
       end
     end
 
+    def style_rows(sheet, template_sheet)
+      default_style = sheet.default_row_style
+      row_styles = sheet.row_styles
+      if row_styles || default_style
+        roo_rows(template_sheet).each do |row_number|
+          style = row_styles[row_number] || default_style
+          active_sheet.style_row(row_number - 1, style) # Note: Styling rows is zero indexed
+        end
+      end
+    end
+
     def roo_columns(roo_sheet)
       (roo_sheet.first_column .. roo_sheet.last_column)
     end
@@ -86,10 +102,20 @@ module ExcelTemplating
       (roo_sheet.first_row .. roo_sheet.last_row)
     end
 
+    def protect_spreadsheet
+      active_sheet.protect if protected?
+    end
+
     def apply_data_to_sheets
       sheets.each_with_index do |sheet, sheet_number|
+        @current_sheet = sheet
         sheet_data = sheet.sheet_data(data)
         template_sheet = template.sheet(sheet_number)
+
+        # column and row styles should be applied before writing any data to the sheet
+        style_columns(sheet, template_sheet)
+        # row styles have priority over column styles
+        style_rows(sheet, template_sheet)
 
         roo_rows(template_sheet).each do |row_number|
           sheet.each_row_at(row_number, sheet_data) do |row_data|
@@ -103,14 +129,13 @@ module ExcelTemplating
             active_sheet.next_row
           end
         end
-        style_columns(sheet, template_sheet)
       end
     end
 
     def apply_data_to_cell(local_data, template_sheet, row_number, column_number)
       template_cell = template_sheet.cell(row_number, column_number)
       font = template_sheet.font(row_number, column_number)
-      format = format_for(font)
+      format = format_for(font, row_number, column_number)
       value = mustachify(template_cell, locals: local_data)
 
       active_sheet.cell(
@@ -128,22 +153,49 @@ module ExcelTemplating
       value.is_a?(String) && value =~ /^==/
     end
 
-    def format_for(font)
-      font_formats[font]
+    def format_for(font, row_number, column_number)
+      format = font_formats(font)
+
+      set_column_lock(format, column_number) if column_is_locked?(column_number)
+      set_row_lock(format, row_number)  if row_is_locked?(row_number)
+
+      format
     end
 
-    def font_formats
-      @font_formats ||= Hash.new do |cache, font|
-        template_font = font || Roo::Font.new
+    def column_is_locked?(column_number)
+      row_or_column_is_locked? current_sheet.column_styles[column_number]
+    end
 
-        format_details = {
-          bold: template_font.bold? ? 1 : 0,
-          italic: template_font.italic? ? 1 : 0,
-          underline: template_font.underline? ? 1 : 0
-        }.merge(default_format_styling)
+    def row_is_locked?(row_number)
+      row_or_column_is_locked? current_sheet.row_styles[row_number]
+    end
 
-        cache[font] = workbook.add_format format_details
-      end
+    def row_or_column_is_locked?(row_or_column)
+      row_or_column && row_or_column[:format] && row_or_column[:format].has_key?(:locked)
+    end
+
+    def row_or_column_lock_attribute(row_or_column)
+      row_or_column && row_or_column[:format] && row_or_column[:format][:locked]
+    end
+
+    def set_row_lock(format, row_number)
+      format.set_locked row_or_column_lock_attribute(current_sheet.row_styles[row_number])
+    end
+
+    def set_column_lock(format, column_number)
+      format.set_locked row_or_column_lock_attribute(current_sheet.column_styles[column_number])
+    end
+
+    def font_formats(font=nil)
+      template_font = font || Roo::Font.new
+
+      format_details = {
+        bold: template_font.bold? ? 1 : 0,
+        italic: template_font.italic? ? 1 : 0,
+        underline: template_font.underline? ? 1 : 0
+      }.merge(default_format_styling)
+
+      workbook.add_format format_details
     end
 
     def mustachify(inline_template, locals: {})
