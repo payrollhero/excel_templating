@@ -11,6 +11,7 @@ describe ExcelTemplating do
         font: "Calibri",
         size: 10,
         align: :left,
+        locked: 0
       )
       sheet 1 do
         repeat_row 17, with: :employee_data
@@ -20,12 +21,22 @@ describe ExcelTemplating do
             width: inches(1.98)
           },
           columns: {
+            1 => { format: { locked: 1 } },
             3 => { width: inches(1.98) },
             4 => { width: inches(1.98) },
             5 => { width: inches(0.39) }
           }
         )
+
+        style_rows(
+          default: {},
+          rows: {
+            1 => { format: { locked: 1 } },
+          }
+        )
       end
+
+      protect_document
     end
 
     subject { AlphalistClass.new(data) }

@@ -24,9 +24,16 @@ module ExcelTemplating
 
     # @param [Hash] default default styling for all columns.
     # @param [Hash] columns specific styling for numbered columns.
-    def style_columns(default:, columns: nil)
+    def style_columns(default:, columns: {})
       @default_column_style = default
       @column_styles = columns
+    end
+
+    # @param [Hash] default default styling for all rows.
+    # @param [Hash] rows specific styling for numbered rows.
+    def style_rows(default:, rows: {})
+      @default_row_style = default
+      @row_styles = rows
     end
 
     # Repeat a numbered row in the template using an array from the data
@@ -54,11 +61,19 @@ module ExcelTemplating
     #### Non DSL Methods ###
 
     def default_column_style
-      @default_column_style
+      @default_column_style || {}
     end
 
     def column_styles
-      @column_styles
+      @column_styles || {}
+    end
+
+    def default_row_style
+      @default_row_style || {}
+    end
+
+    def row_styles
+      @row_styles || {}
     end
 
     def sheet_data(data)
