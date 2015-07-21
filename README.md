@@ -114,7 +114,13 @@ The library also adds an excel rspec matcher.
     end
 ```
 
-## Requirements
+## Deploying
+
+1. Update lib/excel_templating/version.rb
+2. Update ChangeLog.md
+3. Commit the 2 changed files with the version number
+5. Push this to git
+6. Run `rake release`
 
 ## Install
 
