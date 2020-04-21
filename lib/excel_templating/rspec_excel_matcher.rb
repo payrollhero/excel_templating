@@ -95,11 +95,21 @@ class RSpec::Matchers::ExcelMatcher
   def check_cells(sheet_name, sheet1, sheet2)
     (sheet1.first_row .. sheet1.last_row).each do |row|
       (sheet1.first_column .. sheet1.last_column).each do |col|
-        check(sheet_name, sheet1.cell(row, col) == sheet2.cell(row, col),
-              discrepancy_message(col, row, sheet1, sheet2))
+        check(sheet_name, compare_value(col, row, sheet1, sheet2), discrepancy_message(col, row, sheet1, sheet2))
       end
     end
+  end
 
+  def compare_value(col, row, sheet1, sheet2)
+    value2 = sheet2.cell(row, col)
+    value1 = sheet1.cell(row, col)
+    if value2.class == Float
+      value2 == value1.to_f
+    elsif value1.class == Float
+      value1 == value2.to_f
+    else
+      value2 == value1
+    end
   end
 
   def discrepancy_message(col, row, sheet1, sheet2)
