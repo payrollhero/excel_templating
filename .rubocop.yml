@@ -1,3 +1,6 @@
 inherit_from:
- - .rubocop.hound.yml
- - .rubocop.ph.yml
+  - .rubocop.ph.yml
+  - .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable

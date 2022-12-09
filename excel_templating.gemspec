@@ -23,9 +23,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency "write_xlsx"
   gem.add_dependency "writeexcel"
 
-  gem.add_development_dependency 'bundler', '~> 1.0'
+  gem.add_development_dependency 'bundler', '> 1.17', '< 3'
   gem.add_development_dependency 'rake', '~> 0.8'
   gem.add_development_dependency 'rspec', '~> 3.3'
+  gem.add_development_dependency 'rubocop_challenger'
   gem.add_development_dependency 'rubygems-tasks', '~> 0.2'
   gem.add_development_dependency 'yard', '~> 0.8'
   gem.add_development_dependency 'rspec-its'
