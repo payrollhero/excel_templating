@@ -78,7 +78,7 @@ module ExcelTemplating
       if column_styles || default_style
         roo_columns(template_sheet).each do |column_number|
           style = column_styles[column_number] || default_style
-          active_sheet.style_col(column_number - 1, style) # Note: Styling columns is zero indexed
+          active_sheet.style_col(column_number - 1, **style) # Note: Styling columns is zero indexed
         end
       end
     end

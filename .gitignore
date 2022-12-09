@@ -1,4 +1,6 @@
 Gemfile.lock
+gemfiles/*.lock
+coverage/
+*.gem
 doc/
 pkg/
-vendor/cache/*.gem
