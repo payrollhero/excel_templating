@@ -28,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'rubocop_challenger'
   gem.add_development_dependency 'rubygems-tasks', '~> 0.2'
+  gem.add_development_dependency "simplecov"
   gem.add_development_dependency 'yard', '~> 0.8'
   gem.add_development_dependency 'rspec-its'
 end

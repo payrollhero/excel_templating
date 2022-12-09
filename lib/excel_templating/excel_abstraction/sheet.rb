@@ -8,8 +8,8 @@ module ExcelAbstraction
       @active_cell_reference = ExcelAbstraction::ActiveCellReference.new
     end
 
-    def header(value, options = {})
-      cell(value, {bold: 1}.merge(options))
+    def header(value, **options)
+      cell(value, **{bold: 1}.merge(options))
       self
     end
 
@@ -47,8 +47,8 @@ module ExcelAbstraction
       active_cell_reference.newline
     end
 
-    def cells(array, options = {})
-      Array(array).each { |value| cell(value, options) }
+    def cells(array, **options)
+      Array(array).each { |value| cell(value, **options) }
       self
     end
 

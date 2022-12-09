@@ -19,8 +19,6 @@ rescue Bundler::BundlerError => e
 end
 
 require 'rake'
-require 'gemfury/tasks'
-
 require 'rubygems/tasks'
 Gem::Tasks.new(release: false)
 
