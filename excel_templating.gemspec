@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
-  gem.required_ruby_version = "> 2.6", "< 3.2"
+  gem.required_ruby_version = "> 2.6", "< 3.3"
 
   gem.add_dependency "mustache"
   gem.add_dependency "roo", ">= 2.0.0beta1", "< 3"
@@ -25,7 +25,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "writeexcel"
 
   gem.add_development_dependency 'bundler', '> 1.17', '< 3'
-  gem.add_development_dependency 'rake', '~> 0.8'
+  gem.add_development_dependency 'rake', '> 0.8', '< 20'
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'rubocop_challenger'
   gem.add_development_dependency 'rubygems-tasks', '~> 0.2'
