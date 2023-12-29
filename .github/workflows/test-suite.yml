@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         gemfile: ["rails-7.0.x"]
-        ruby: [3.2]
+        ruby: [3.3, 3.2]
         include:
           - gemfile: rails-7.0.x
             ruby: '3.1'
