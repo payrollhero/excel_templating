@@ -398,12 +398,6 @@ Style/Documentation:
     - 'lib/excel_templating/render_helper.rb'
     - 'lib/excel_templating/renderer.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/Encoding:
-  Exclude:
-    - 'Rakefile'
-    - 'excel_templating.gemspec'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
