@@ -404,11 +404,6 @@ Style/ExpandPathArguments:
   Exclude:
     - 'excel_templating.gemspec'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExplicitBlockArgument:
-  Exclude:
-    - 'lib/excel_templating/excel_abstraction/cell_range.rb'
 
 # Offense count: 41
 # This cop supports unsafe autocorrection (--autocorrect-all).
