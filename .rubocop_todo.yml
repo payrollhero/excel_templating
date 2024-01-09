@@ -119,12 +119,6 @@ Layout/IndentationWidth:
   Exclude:
     - 'lib/excel_templating/excel_abstraction/work_book.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowDoxygenCommentStyle, AllowGemfileRubyComment.
-Layout/LeadingCommentSpace:
-  Exclude:
-    - 'lib/excel_templating/renderer.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
