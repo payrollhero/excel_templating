@@ -202,13 +202,6 @@ Layout/SpaceInsideReferenceBrackets:
   Exclude:
     - 'lib/excel_templating/renderer.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingEmptyLines:
-  Exclude:
-    - 'Gemfile'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
