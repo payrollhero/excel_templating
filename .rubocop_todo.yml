@@ -119,11 +119,6 @@ Layout/MultilineOperationIndentation:
   Exclude:
     - 'lib/excel_templating/document/data_source_registry/registry_renderer.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'spec/cell_validation_spec.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).

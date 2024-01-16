@@ -63,7 +63,7 @@ describe 'cell validation' do
       {
         all_sheets:
           {
-            valid_foos: ["foo","bar"],
+            valid_foos: ["foo", "bar"],
             valid_value: "foo",
           }
       }
