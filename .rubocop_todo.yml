@@ -72,14 +72,6 @@ Layout/EmptyLines:
   Exclude:
     - 'lib/excel_templating/excel_abstraction/work_book.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: around, only_before
-Layout/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'lib/excel_templating/render_helper.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowAliasSyntax, AllowedMethods.
