@@ -10,7 +10,7 @@ module ExcelAbstraction
     end
 
     def each(&block)
-      cell_references.each { |cell_reference| yield(cell_reference) }
+      cell_references.each(&block)
     end
 
     def <<(attrs)

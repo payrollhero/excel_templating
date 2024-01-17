@@ -232,13 +232,6 @@ Lint/SymbolConversion:
     - 'lib/excel_templating/excel_abstraction/sheet.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'lib/excel_templating/excel_abstraction/cell_range.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/UselessAssignment:
   Exclude:
@@ -384,12 +377,6 @@ Style/Documentation:
 Style/ExpandPathArguments:
   Exclude:
     - 'excel_templating.gemspec'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExplicitBlockArgument:
-  Exclude:
-    - 'lib/excel_templating/excel_abstraction/cell_range.rb'
 
 # Offense count: 41
 # This cop supports unsafe autocorrection (--autocorrect-all).
