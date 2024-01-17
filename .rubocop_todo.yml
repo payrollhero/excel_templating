@@ -158,14 +158,13 @@ Layout/SpaceInsideBlockBraces:
     - 'lib/excel_templating/document/data_source_registry.rb'
     - 'spec/excel_abstraction/cell_reference_spec.rb'
 
-# Offense count: 38
+# Offense count: 36
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
 # SupportedStyles: space, no_space, compact
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'lib/excel_templating/excel_abstraction/sheet.rb'
     - 'spec/column_validation_spec.rb'
     - 'spec/excel_abstraction/cell_range_spec.rb'
     - 'spec/excel_abstraction/cell_spec.rb'
@@ -529,12 +528,6 @@ Style/RaiseArgs:
   Exclude:
     - 'lib/excel_templating/excel_abstraction/active_cell_reference.rb'
     - 'lib/excel_templating/excel_abstraction/cell.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantDoubleSplatHashBraces:
-  Exclude:
-    - 'lib/excel_templating/excel_abstraction/sheet.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
