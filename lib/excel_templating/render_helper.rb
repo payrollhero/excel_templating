@@ -8,7 +8,7 @@ module ExcelTemplating
       private
 
       def letters
-        @row_letters ||= ('A' .. 'ZZ').to_a
+        @letters ||= ('A' .. 'ZZ').to_a
       end
     end
   end
