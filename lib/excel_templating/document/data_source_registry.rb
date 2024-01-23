@@ -37,9 +37,9 @@ module ExcelTemplating
 
     # @return [TrueClass|FalseClass]
     def any_data_sheet_symbols?
-      select {|info|
+      select do |info|
         info.data_sheet?
-      }.any?
+      end.any?
     end
 
     # @return [Array<Symbol>]

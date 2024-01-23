@@ -43,7 +43,7 @@ describe ExcelTemplating do
     let(:organization_name) { "The Coffee Bean and Tea Leaf" }
     let(:year) { 1971 }
 
-    let(:data) {
+    let(:data) do
       {
         all_sheets:
           {
@@ -126,7 +126,7 @@ describe ExcelTemplating do
 
         }
       }
-    }
+    end
 
     describe "#render" do
       it do

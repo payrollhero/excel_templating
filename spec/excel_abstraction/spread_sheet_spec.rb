@@ -24,9 +24,9 @@ describe ExcelAbstraction::SpreadSheet do
       file.write subject.to_s
       file.close
 
-      expect {
+      expect do
         Roo::Excel.new(file.path, packed: nil, file_warning: :ignore)
-      }.to_not raise_exception
+      end.to_not raise_exception
 
       File.unlink(file.path)
       expect(subject).to be_closed
