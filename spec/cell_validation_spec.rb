@@ -20,14 +20,14 @@ describe 'cell validation' do
 
     subject { SimpleCellValidatedDocument.new(data) }
 
-    let(:data) {
+    let(:data) do
       {
         all_sheets:
           {
             valid_value: "foo",
           }
       }
-    }
+    end
 
     describe "#render" do
       it do
@@ -59,7 +59,7 @@ describe 'cell validation' do
 
     subject { SimpleFromDataValidatedDocument.new(data) }
 
-    let(:data) {
+    let(:data) do
       {
         all_sheets:
           {
@@ -67,7 +67,7 @@ describe 'cell validation' do
             valid_value: "foo",
           }
       }
-    }
+    end
 
     describe "#render" do
       it do
@@ -92,14 +92,14 @@ describe 'cell validation' do
 
     subject { InlineCellValidatedDocument.new(data) }
 
-    let(:data) {
+    let(:data) do
       {
         all_sheets:
           {
             valid_value: "foo",
           }
       }
-    }
+    end
 
     describe "#render" do
       it do

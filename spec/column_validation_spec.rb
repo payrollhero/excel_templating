@@ -22,7 +22,7 @@ describe 'column validation' do
 
     subject { SimpleColumnValidatedDocument.new(data) }
 
-    let(:data) {
+    let(:data) do
       {
         all_sheets: {},
         1 => {
@@ -32,7 +32,7 @@ describe 'column validation' do
           ]
         }
       }
-    }
+    end
 
     describe "#render" do
       it do
