@@ -12,7 +12,7 @@ describe 'cell validation' do
         size: 10,
         align: :left,
       )
-      list_source :valid_foos, title: "Foos", list: ["foo", "bar"]
+      list_source :valid_foos, title: "Foos", list: %w[foo bar]
       sheet 1 do
         validate_cell row: 2, column: 1, with: :valid_foos
       end
@@ -63,7 +63,7 @@ describe 'cell validation' do
       {
         all_sheets:
           {
-            valid_foos: ["foo", "bar"],
+            valid_foos: %w[foo bar],
             valid_value: "foo",
           }
       }
@@ -84,7 +84,7 @@ describe 'cell validation' do
     class InlineCellValidatedDocument < ExcelTemplating::Document
       template "spec/assets/valid_cell.mustache.xlsx"
       title "Valid cell test"
-      list_source :valid_foos, title: "Foos", list: ["foo", "bar"], inline: true
+      list_source :valid_foos, title: "Foos", list: %w[foo bar], inline: true
       sheet 1 do
         validate_cell row: 2, column: 1, with: :valid_foos
       end
