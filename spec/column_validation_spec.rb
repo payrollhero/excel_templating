@@ -12,7 +12,7 @@ describe 'column validation' do
         size: 10,
         align: :left,
       )
-      list_source :valid_foos, title: "Foos", list: ["foo", "bar"]
+      list_source :valid_foos, title: "Foos", list: %w[foo bar]
       sheet 1 do
         repeat_row 2, with: :foo_data do
           validate_column 1, with: :valid_foos

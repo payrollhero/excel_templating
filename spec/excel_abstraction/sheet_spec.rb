@@ -22,7 +22,7 @@ describe ExcelAbstraction::Sheet do
     it "sets the headers" do
       test_excel_file do |file|
         excel = create_excel(file, spreadsheet) do
-          subject.header(["Foo", "Bar"])
+          subject.header(%w[Foo Bar])
         end
 
         expect(excel.cell("A", 1)).to eq "Foo"
@@ -49,7 +49,7 @@ describe ExcelAbstraction::Sheet do
     it "sets the cell values" do
       test_excel_file do |file|
         excel = create_excel(file, spreadsheet) do
-          subject.cells(["Foo", "Bar"])
+          subject.cells(%w[Foo Bar])
         end
 
         expect(excel.cell("A", 1)).to eq "Foo"
