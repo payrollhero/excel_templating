@@ -10,8 +10,8 @@ module ExcelTemplating
     # @return [Hash] Gives back a hash of options which adds the validation options for the symbol
     def absolute_reference_for(source_symbol)
       unless registry.has_registry?(source_symbol)
-        raise ArgumentError, "#{source_symbol} is not a defined data_source.  Defined data sources are " +
-              "#{registry.supported_registries}"
+        raise ArgumentError, "#{source_symbol} is not a defined data_source.  Defined data sources are " \
+                             "#{registry.supported_registries}"
       end
       registry_info = registry[source_symbol]
       validation_options_for(registry_info)
