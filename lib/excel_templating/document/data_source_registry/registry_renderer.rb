@@ -11,7 +11,7 @@ module ExcelTemplating
     def absolute_reference_for(source_symbol)
       unless registry.has_registry?(source_symbol)
         raise ArgumentError, "#{source_symbol} is not a defined data_source.  Defined data sources are " +
-              "#{registry.supported_registries}"
+              registry.supported_registries.to_s
       end
       registry_info = registry[source_symbol]
       validation_options_for(registry_info)

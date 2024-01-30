@@ -539,11 +539,6 @@ Style/RedundantFilterChain:
   Exclude:
     - 'lib/excel_templating/document/data_source_registry.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'lib/excel_templating/document/data_source_registry/registry_renderer.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
