@@ -9,7 +9,7 @@ module ExcelAbstraction
     end
 
     def header(value, **options)
-      cell(value, **{bold: 1}.merge(options))
+      cell(value, bold: 1, **options)
       self
     end
 
