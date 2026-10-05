@@ -2,5 +2,5 @@ source 'https://rubygems.org'
 
 gemspec path: '../'
 
-gem 'activerecord', '~> 7.1.2'
+gem 'activerecord', '~> 8.1.3.1'
 
