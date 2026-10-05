@@ -70,7 +70,7 @@ module ExcelTemplating
     # @param [Hash] options Additional options to pass to Format
     def default_styling(font: "Calibri", size: 10, align: :left, ** options)
       @default_styling = {
-        name: font,
+        font: font,
         size: size,
         align: align
       }.merge(options)

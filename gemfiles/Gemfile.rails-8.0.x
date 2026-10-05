@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gemspec path: '../'
+
+gem 'activerecord', '~> 8.0.5.1'
+
